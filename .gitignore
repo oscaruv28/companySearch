@@ -1,0 +1,22 @@
+# --- Generales ---
+node_modules/
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# --- Backend (services/companies-service) ---
+services/companies-service/dist/
+services/companies-service/temp/
+services/companies-service/.env
+
+# --- Frontend (frontend) ---
+frontend/dist/
+frontend/build/
+frontend/.env
+frontend/.env.local
+
+# --- Logs y temporales ---
+*.log
+npm-debug.log*
+yarn-debug.log*
