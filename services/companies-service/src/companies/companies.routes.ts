@@ -9,16 +9,8 @@ export const createCompaniesRouter = (em: EntityManager) => {
   const service = new CompaniesService(em);
   const controller = new CompaniesController(service);
 
-  /**
-   * PASO 1: Validar NIT
-   * GET /api/companies/validate/:nit
-   */
   router.get('/validate/:nit', controller.validate);
 
-  /**
-   * PASO 4: Registro final
-   * POST /api/companies/register
-   */
   router.post('/register', controller.register);
 
   return router;
