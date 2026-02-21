@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { Toaster, toast } from 'sonner';
 import { Layout } from './app/layout';
 import { ValidatePage } from './app/(registration)/validate/page';
 import { RegisterPage } from './app/(registration)/register/page';
@@ -20,22 +21,24 @@ function RegistrationFlow() {
 
   return (
     <Routes>
-      {/* 1. Redirección por defecto: Al entrar a "/", te manda a "/validate" */}
       <Route path="/" element={<Navigate to="/validate" replace />} />
 
-      {/* 2. Ruta de Validación */}
       <Route path="/validate" element={
         <ValidatePage onValidated={handleValidated} />
       } />
 
-      {/* 3. Ruta de Registro (Protegida: si no hay data, vuelve a validate) */}
       <Route path="/register" element={
         companyData ? (
           <RegisterPage 
             initialData={companyData} 
             onBack={handleBack}
             onSuccess={() => {
-              alert("¡Registro exitoso!");
+              // 2. Reemplazamos el alert feo por un toast elegante
+              toast.success('¡Registro exitoso!', {
+                description: 'La empresa ha sido guardada en el sistema.',
+                duration: 4000,
+              });
+              
               setCompanyData(null);
               navigate('/validate');
             }}
@@ -49,6 +52,13 @@ function RegistrationFlow() {
 export default function App() {
   return (
     <BrowserRouter>
+      {/* 3. El Toaster debe ir aquí para que esté disponible en toda la app */}
+      <Toaster 
+        position="top-right" 
+        richColors 
+        closeButton 
+        theme="light"
+      />
       <Layout>
         <RegistrationFlow />
       </Layout>
