@@ -3,14 +3,14 @@ import { submitRegistrationService } from '../services/registration.service';
 import { Loader2, Save, ArrowLeft } from 'lucide-react';
 
 interface Props {
-    initialData: any; 
+    initialData: any;
     onBack: () => void;
     onSuccess: () => void;
 }
 
 export const CompanyRegisterForm = ({ initialData, onBack, onSuccess }: Props) => {
     const [loading, setLoading] = useState(false);
-    
+
     const [formData, setFormData] = useState({
         tipoIdentificacion: initialData?.tipoIdentificacion || 'NIT',
         nit: initialData?.nit || '',
@@ -33,6 +33,10 @@ export const CompanyRegisterForm = ({ initialData, onBack, onSuccess }: Props) =
 
         const textFields = ['primerNombre', 'segundoNombre', 'primerApellido', 'segundoApellido', 'razonSocial'];
         if (textFields.includes(name) && /\d/.test(value)) return;
+
+        if (name === 'celular' && value !== '' && !/^[0-9]+$/.test(value)) {
+            return;
+        }
 
         setFormData(prev => ({
             ...prev,

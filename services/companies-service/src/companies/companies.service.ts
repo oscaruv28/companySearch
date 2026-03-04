@@ -23,15 +23,15 @@ export class CompaniesService {
         }
 
         if (company.isBlocked) {
-            throw new createError.Forbidden("Registro restringido.");
+            return this.formatResponse("Registro restringido.", { canRegister: false, reason: "La empresa se encuentra bloqueada." }, "0");
         }
 
         const alreadyRegistered = await forkEm.findOne(CompanyRegistration, { company: company.id });
 
         if (alreadyRegistered) {
-            return this.formatResponse("Esta empresa ya completó su registro anteriormente.", { 
-                canRegister: false, 
-                reason: "Proceso de registro finalizado previamente." 
+            return this.formatResponse("Esta empresa ya completó su registro anteriormente.", {
+                canRegister: false,
+                reason: "Proceso de registro finalizado previamente."
             }, "2");
         }
 
@@ -55,7 +55,7 @@ export class CompaniesService {
         }
 
         this.validateBusinessRules(data);
-        
+
         Object.assign(company, data);
 
         const registration = new CompanyRegistration();
@@ -63,7 +63,7 @@ export class CompaniesService {
 
         try {
             await forkEm.persistAndFlush([company, registration]);
-            
+
             return this.formatResponse("Registro exitoso", {
                 id: company.id,
                 registrationId: registration.id,
@@ -77,7 +77,12 @@ export class CompaniesService {
     private validateBusinessRules(data: RegisterCompanyDto) {
         const type = data.tipoIdentificacion;
         const onlyLetters = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$/;
+        const onlyNumbers = /^[0-9]+$/;
 
+        if (data.celular && !onlyNumbers.test(data.celular)) {
+            throw new createError.BadRequest("El teléfono debe contener únicamente números.");
+        }
+        
         if (type === IdentificationType.NIT || type === 'IE') {
             if (!data.razonSocial) throw new createError.BadRequest("Razón Social es obligatoria.");
             if (data.razonSocial && !onlyLetters.test(data.razonSocial)) {

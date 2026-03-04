@@ -24,3 +24,16 @@ PROCEDIMIENTO PRUEBA TÉCNICA
 - npm install swagger-ui-express swagger-jsdoc
 - npm install -D @types/swagger-ui-express @types/swagger-jsdoc
 
+INSTALACIONES
+
+# Errores y validación
+npm install http-errors class-validator class-transformer
+npm install -D @types/http-errors
+
+# ORM y DB
+npm install @mikro-orm/core @mikro-orm/postgresql @mikro-orm/reflection
+
+# Swagger
+npm install swagger-ui-express swagger-jsdoc
+npm install -D @types/swagger-ui-express @types/swagger-jsdoc
+
