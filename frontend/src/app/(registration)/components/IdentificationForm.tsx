@@ -7,11 +7,9 @@ export const IdentificationForm = ({ onValidated }: { onValidated: (data: any) =
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
-    // Validación en tiempo real para el feedback visual
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         
-        // Propuesta de feedback: No permitimos que escriba letras (Pág 4)
         if (value !== '' && !/^\d+$/.test(value)) {
             setError('El NIT debe contener únicamente números.');
             return;
@@ -34,7 +32,6 @@ export const IdentificationForm = ({ onValidated }: { onValidated: (data: any) =
             if (res.data.canRegister) {
                 onValidated(res.data.companyData);
             } else {
-                // Feedback si el NIT es válido en formato pero no para registro (negocio)
                 setError(res.data.reason || 'Este NIT no está habilitado para registro.');
             }
         } catch (err: any) {
@@ -44,7 +41,6 @@ export const IdentificationForm = ({ onValidated }: { onValidated: (data: any) =
         }
     };
 
-    // Determinamos si hay una inconsistencia para el estilo visual
     const hasInconsistency = error !== '';
 
     return (
@@ -85,7 +81,6 @@ export const IdentificationForm = ({ onValidated }: { onValidated: (data: any) =
 
             <button
                 type="submit"
-                // No permitimos continuar hasta que sea corregido (Requerimiento técnico)
                 disabled={loading || !nit || hasInconsistency}
                 className="inline-flex items-center justify-center rounded-md bg-primary text-primary-foreground h-10 px-4 py-2 hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer transition-all active:scale-95"
             >

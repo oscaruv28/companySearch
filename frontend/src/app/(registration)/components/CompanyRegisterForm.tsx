@@ -16,23 +16,21 @@ export const CompanyRegisterForm = ({ initialData, onBack, onSuccess }: Props) =
         nit: initialData?.nit || '',
         razonSocial: initialData?.razonSocial || '',
         primerNombre: initialData?.primerNombre || '',
-        segundoNombre: initialData?.segundoNombre || '', // Agregado
+        segundoNombre: initialData?.segundoNombre || '',
         primerApellido: initialData?.primerApellido || '',
-        segundoApellido: initialData?.segundoApellido || '', // Agregado
+        segundoApellido: initialData?.segundoApellido || '',
         email: initialData?.email || '',
         celular: initialData?.celular || '',
         autorizaCelular: initialData?.autorizaCelular || false,
         autorizaEmail: initialData?.autorizaEmail || false
     });
 
-    // Lógica discriminadora (Página 3)
     const isJuridica = ['NIT', 'IE', 'Extranjería'].includes(formData.tipoIdentificacion);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value, type } = e.target;
         const checked = (e.target as HTMLInputElement).checked;
 
-        // Regla de oro: No números en campos de texto (Página 4)
         const textFields = ['primerNombre', 'segundoNombre', 'primerApellido', 'segundoApellido', 'razonSocial'];
         if (textFields.includes(name) && /\d/.test(value)) return;
 

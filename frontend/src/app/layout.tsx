@@ -1,6 +1,5 @@
 import React from 'react';
 
-// Este es el "cascarón" que viste en tu ejemplo de SocialNest
 export const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">

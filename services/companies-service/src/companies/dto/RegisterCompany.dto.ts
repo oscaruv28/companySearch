@@ -39,9 +39,9 @@ export class RegisterCompanyDto {
   @IsEmail({}, { message: 'El formato del email no es válido' })
   email!: string;
 
-  @IsOptional()
-  @IsString()
-  celular?: string;
+  @IsNotEmpty({ message: 'El número de celular es obligatorio' })
+  @Matches(/^[0-9]+$/, { message: 'El celular debe contener solo números' })
+  celular!: string;
 
   @IsBoolean()
   autorizaCelular!: boolean;

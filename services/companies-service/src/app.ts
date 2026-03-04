@@ -8,18 +8,26 @@ import type { EntityManager } from '@mikro-orm/postgresql';
 export const createApp = (em: EntityManager) => {
   const app = express();
 
-  // Middlewares
+  // 1. MIDDLEWARES
   app.use(cors());
   app.use(express.json());
 
-  // Swagger UI - Disponible en http://localhost:3000/api-docs
+  // 2. SWAGGER Y RUTAS
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
-
-  // Rutas
   app.use('/api/companies', createCompaniesRouter(em));
-
-  // Ruta de salud simple
   app.get('/health', (req, res) => res.json({ status: 'up' }));
+
+  // 3. MANEJO DE ERRORES
+  // Parámetros: (err, req, res, next)
+  app.use((err: any, req: any, res: any, next: any) => {
+    const status = err.status || 500;
+    
+    res.status(status).json({
+      success: false,
+      code: status.toString(),
+      message: err.message || 'Internal Server Error'
+    });
+  });
 
   return app;
 };
