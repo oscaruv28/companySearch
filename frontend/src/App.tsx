@@ -33,7 +33,6 @@ function RegistrationFlow() {
             initialData={companyData} 
             onBack={handleBack}
             onSuccess={() => {
-              // 2. Reemplazamos el alert feo por un toast elegante
               toast.success('¡Registro exitoso!', {
                 description: 'La empresa ha sido guardada en el sistema.',
                 duration: 4000,
