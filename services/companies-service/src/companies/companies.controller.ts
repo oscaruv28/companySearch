@@ -8,16 +8,10 @@ export class CompaniesController {
 
     register = async (req: Request, res: Response) => {
         try {
-            console.log("BODY RECIBIDO:", req.body);
-
             const companyData: RegisterCompanyDto = req.body;
             const result = await this.companiesService.register(companyData);
-
-            console.log("RESULTADO SERVICIO:", result);
             res.status(201).json(result);
         } catch (error: any) {
-            console.error("ERROR EN REGISTER:", error.message);
-
             res.status(400).json({
                 success: false,
                 code: "400",
